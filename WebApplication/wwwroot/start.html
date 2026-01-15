@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Start!</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.min.css">
+</head>
+
+<body>
+    <header class="container">
+        <hgroup>
+            <h1>E2E & API testing met PlayWright</h1>
+            <p>Oefeningen om met playwright aan de slag te gaan.</p>
+        </hgroup>
+       
+    </header>
+
+    <main class="container">
+
+        <article id="article-installatie">
+            <h2>Installatie</h2>
+            <p>
+                Je begint met de initialisatie van PlayWright. Dit kun je doen door in de map PlaywrightTests een terminal(powershell) te opnenen en het volgende command in te 
+                voeren: <mark>dotnet add package Microsoft.Playwright.MSTest</mark>. Nu worden de dependencies geïnstalleerd.
+            </p>
+            <p>
+                De installatie is nog niet afgerond. Je mist namelijk nog de browsers voor de tests. Wel is er een powershell script aangemaakt in de <code>bin\debug\-versie-\</code> map. Installeer 
+                ook de browser dependencies en gebruik hiervoor het <mark>powershell bin/Debug/net8.0/playwright.ps1 install</mark> commando.
+            </p>
+
+        </article>
+
+        <article id="article-test">
+            <h2>De eerste test!</h2>
+            <p>
+                Heb je Playwright geinstalleerd; dan is het tijd voor een eerste test! Hiervoor kun je verschillende commando's uitvoerein in de terminal. Dit doe je met de normale .NET testrunner.... oftewel: <mark>dotnet test</mark>.
+            </p>
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>Commando</th>
+                        <th>Resultaat</th>
+                    </tr>
+                    <tr>
+                        <td><mark>dotnet test</mark></td>
+                        <td>De tests worden op de achtergrond uitgevoerd.</td>
+                    </tr>
+                    <tr>
+                        <td><mark>dotnet test <b>--settings:headed.runsettings</b></mark></td>
+                        <td>De instellingen in de <code>headed.runsettings</code> file worden gebruikt.</td>
+                    </tr>
+                    <tr>
+                        <td><mark>dotnet test --settings:headed.runsettings <b>--filter ClassName=PlaywrightTests.Oefening1</b></mark></td>
+                        <td>De instellingen in de <code>headed.runsettings</code> file worden gebruikt en de <code>tests in de Oefening1 class</code> worden uitgevoerd.</td>
+                    </tr>
+                </thead>
+            </table>
+
+            <h3>Testresultaten</h3>
+            <p>Gebruik je de commandline? Dan zie je de resultaten van de testrun direct ook daar inclusief eventuele foutmelding. Wil je wat meer inzage? Gebruik dan de in VS ingebouwde testexplorer.</p>
+
+        </article>
+
+        <article id="article-go">
+            <h2>Aan de slag!</h2>
+            <p>
+                Playwright werkt. Tijd om aan de slag te gaan met de oefeningen:
+
+                <h4>Oefeningen voor UI-Testing</h4>
+                <ul>
+                    <li>
+                        <a href="oefening1.html">Oefening 1: selectors</a>
+                    </li>
+                    <li>
+                        <a href="oefening2.html">Oefening 2: veranderende selectors</a>
+                    </li>
+                    <li>
+                        <a href="oefening3.html">Oefening 3: asserting</a>
+                    </li>
+                </ul>
+                <h4>Oefeningen voor API-Testing</h4>
+                <ul>
+                    <li>
+                        <a href="oefening4.html">Oefening 4: basis API testing</a>
+                    </li>
+                    <li>
+                        <a href="oefening5.html">Oefening 5: geavanceerd API testing</a>
+                    </li>
+                </ul>
+            </p>
+        </article>
+
+
+
+
+
+    </main>
+    
+</body>
+</html>

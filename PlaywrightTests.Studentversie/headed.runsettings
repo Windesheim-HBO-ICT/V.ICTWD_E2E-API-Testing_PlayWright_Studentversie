@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<!-- MSTest adapter -->
+	<MSTest>
+		<Parallelize>
+			<Workers>1</Workers>
+			<Scope>ClassLevel</Scope>
+		</Parallelize>
+	</MSTest>
+	<!-- General run configuration -->
+	<RunConfiguration>
+		<EnvironmentVariables>
+			<!-- For debugging selectors, it's recommend to set the following environment variable -->
+			<DEBUG>pw:api</DEBUG>
+		</EnvironmentVariables>
+	</RunConfiguration>
+	<!-- Playwright -->
+	<Playwright>
+		<!-- De tests worden uitgevoerd in firefox. -->
+		<BrowserName>firefox</BrowserName>
+		<LaunchOptions>
+			<!-- headless = false; oftewel: dan zie je WEL de browser instance -->
+			<Headless>false</Headless>
+			<!-- Even wat vertragen zodat je kunt zien wat er gebeurt. -->
+			<SlowMo>1000</SlowMo>
+		</LaunchOptions>
+	</Playwright>
+</RunSettings>

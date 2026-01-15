@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>E2E Oefening 4</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.min.css">
+    <style>
+        code {
+            white-space: pre-wrap;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .limit-width {
+            max-width: 500px;
+        }
+
+        .muted {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: #0b5;
+        }
+
+        .secondary {
+            background: #5bd;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="container">
+        <hgroup>
+            <h1>Oefeningen: API Testing</h1>
+            <p>Ga naar: <a href="start.html">Start</a> - <a href="oefening3.html">Vorige oefening</a> - <a href="oefening5.html">Volgende oefening</a></p>
+        </hgroup>
+        <p>
+            Bij het realiseren van web-applicaties wordt steeds vaker gewerkt in een architectuur waarbij er ook sprake is van een API project. Bij onderstaande
+            oefeningen ga je PlayWright gebruiken voor het testen van je API's. Het aanroepen van de API's met PlayWright zou je natuurlijk ook kunnen gebruiken in combinatie met een UI test.
+        </p>
+    </header>
+
+    <main class="container">
+
+        <article id="article-installatie">
+            <h3>Een API aanroepen</h3>
+            <p>
+                Bij het testen van een API heb je niet te maken met gebruikersinteractie zoals bij UI-testing. Toch is de kans groot dat je de test wel doet vanuit het bezoekersperspectief 
+                als onderdeel van het testen van een web-applicatie. Oftewel: in aanvulling op UI-tests.
+            </p>
+            <p>
+                Hieronder zie je een eenvoudig voorbeeld van het aanroepen van een API. Het doorloopt drie stappen:
+                <ol>
+                    <li>Uitvoeren van een request</li>
+                    <li>Verwerken van de response</li>
+                    <li>Controleren van de inhoud</li>
+                </ol>
+            </p>
+            <p>
+                <section class="card" id="sample-section">
+<pre><code>
+public async Task Oefening4_GetCustomer_BareJSON()
+{
+    // Request uitvoeren
+    var apiResponse = await Request.GetAsync("api/customers/2"); // uitvoeren van een request
+
+    // Response verwerken
+    await Expect(apiResponse).ToBeOKAsync(); // Is de repsonse OK?
+    var results = await apiResponse.JsonAsync(); // JSON uit de response halen
+    Assert.IsNotNull(results);
+    var customer = results.Value;
+
+    // Inhoud controleren
+    Assert.AreEqual(2, customer.GetProperty("id").GetInt32()); // ID controleren. Moet overeenkomen met ID van het request.
+    Assert.AreEqual("Jan Janssen", customer.GetProperty("name").GetString());
+    Assert.AreEqual("janjanssen@randomdomein.com", customer.GetProperty("email").GetString());
+    Assert.AreEqual(-0.5m, customer.GetProperty("afwijkingLinkerOog").GetDecimal()); // blijkbaar een oogafwijking van -0.5 dioptrie aan het linker oog
+}
+</code></pre>
+                </section>
+
+
+                <h4>Opdracht 1: een product via de API opvragen</h4>
+                <ul>
+                    <li>Je gaat eerst een nieuwe <code>Oefening4.cs</code> file maken. Deze class laat je overerven van onze custom <code>BaseAPITest</code> class.</li>
+                    <li>
+                        Definieer een nieuwe test voor 'Ophalen Product':
+                        <ul>
+                            <li>Voor de request uit (Welk endpoint gebruik je voor ophalen van een product? zie tip hieronder.)</li>
+                            <li>Verwerk de response</li>
+                            <li>Check de inhoud</li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <blockquote>
+                    <h5><mark>Dikke tip:</mark></h5>
+                    <p>
+                        Gebruik het eerder gegeven codevoorbeeld als inspiratie voor het schrijven van je eigen test.
+                    </p>
+                </blockquote>
+                <blockquote>
+                    <h5><mark>Dikke tip 2:</mark></h5>
+                    <p>
+                        In de API is ook "Swagger" beschikbaar. Dit is een handig component om de API endpoints te zien en eventueel testen. Als je de API
+                        hebt gestart is swagger normaliter op te vragen via de url <a href="./swagger/index.html">./swagger/index.html</a>
+                    </p>
+                </blockquote>
+
+                <h4>Opdracht 2: een collectie opvragen</h4>
+                <ul>
+                    <li>Bij deze oefening haal je niet één product op maar ga je werken met een collectie van producten. Dit betekent dat je de verwerking anders moet gaan doen.</li>
+                    <li>
+                        Definieer een nieuwe test en gebruik de code uit de voorgaande oefening als uitgangspunt. (maak even een copy van de testmethode)
+                        Werk onderstaande stappen uit in je eigen code:
+                        <ul>
+                            <li>Wijzig de URL van de request. Welk endpoint ga je aanroepen?</li>
+                            <li>De aanroep van ToBeOKAsync() en JsonAsync() blijven ongewijzigd. Je verwacht immers nog steeds een OK status en JSON als resultaat.</li>
+                            <li>
+                                Uit je JsonAsync() komt alleen geen product maar een collectie. Dit kun je als volgt verwerken:<br />
+
+                                <code>
+                                    <pre>
+    var products = results?.EnumerateArray();
+    Assert.IsNotNull(products);
+</pre>
+                                </code>
+                            </li>
+                            <li>Nu je de collectie hebt van producten kun je hier meer tests op doen.</li>
+                            <li>Check of het juiste aantal producten in de collectie zit: <code>Assert.AreEqual(#aantal#, products?.Count());</code></li>
+                            <li>Pak een product uit de collectie: <code>JsonElement? product = products?.First();</code> of <code>JsonElement? product = products?.ElementAt(1);</code></li>
+                            <li>Gebruik de eerder gemaakte test om de inhoud van een product te testen.</li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </p>
+
+        </article>
+
+
+    </main>
+
+
+</body>
+</html>

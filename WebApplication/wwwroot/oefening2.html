@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>E2E Oefening 2</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.min.css">
+    <style>
+        code {
+            white-space: pre-wrap;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .limit-width {
+            max-width: 500px;
+        }
+
+        .muted {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: #0b5;
+        }
+
+        .secondary {
+            background: #5bd;
+        }
+        
+        .v2-action {
+            background: #f90;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="container">
+        <hgroup>
+            <h1>Oefeningen: Selectors - part 2!</h1>
+            <p>Ga naar: <a href="start.html">Start</a> - <a href="oefening1.html">Vorige oefening</a> - <a href="oefening3.html">Volgende oefening</a></p>
+        </hgroup>
+        <p>
+            Selectoren kunnen kwetsbaar zijn door veranderingen in de UI van de website. Dit maakt UI testing een complexe vorm van integratietesten die je slim en selectief toepast.
+        </p>
+    </header>
+
+    <main class="container">
+
+        <article>
+
+            <h3>Breekbaar!</h3>
+            <p>
+                <section class="card">
+                    <h4>Voorbeeld van kwetsbare selectors</h4>
+                    <p>
+                        Voor E2E testing maak je heel veel gebruik van selectors/locators. Tegelijk wil je ook je site zo nu en dan
+                        updaten <i>of</i> is sommige content via een CMS zelf te updaten. Op dat moment vallen je hard-codes tests mogelijk
+                        om. Dit is niet geheel te voorkomen maar je moet je er bewust van zijn en dus van te voren nadenken over de
+                        selector/locator die je gaat gebruiken.
+                    </p>
+
+                    <p>Hieronder een voorbeeld van een eenvoudig productoverzicht. Onder de producten vind je de volgende opdracht.</p>
+
+                    <article class="product-card" role="listitem">
+                        <h5>Luxe Koptelefoon</h5>
+                        <p class="price" aria-label="Prijs: 79 euro">€79,-</p>
+                        <p>Ruisonderdrukking, comfortabel ontwerp, 30 uur batterij.</p>
+                    </article>
+
+                    <article class="product-card " role="listitem">
+                        <h5>Draadloze Muis</h5>
+                        <p class="price" aria-label="Prijs: 29 euro">€29,-</p>
+                        <p>Ergonomisch model, 2 jaar batterij, bluetooth of USB.</p>
+                    </article>
+
+                    <article class="product-card" role="listitem">
+                        <h5>Laptop 14 inch</h5>
+                        <p class="price" aria-label="Prijs: 899 euro">€899,-</p>
+                        <p>8GB RAM, 256GB SSD, Full HD scherm.</p>
+                    </article>
+
+                    <article class="product-card" role="listitem" style="display:none;">
+                        <h5>Laptop 15 inch</h5>
+                        <p class="price" aria-label="Prijs: 999 euro">€999,-</p>
+                        <p>16GB RAM, 256GB SSD, Full HD scherm.</p>
+                    </article>
+
+                    <h4>Opdracht 1: css selectors &Aacute; visibility</h4>
+                    <ul>
+                        <li>Je gaat eerst een nieuwe <code>Oefening2.cs</code> file maken. Deze class laat je overerven van onze custom <code>BasePageTest</code> class.</li>
+                        <li>
+                            Definieer een nieuwe test 'checken aantal producten':
+                            <ul>
+                                <li>Check of er producten op de pagina staan door gebruik te maken van de <code>product-card</code> class.
+                                Je zou b.v. een count kunnen doen van het aantal producten.<br />
+                                Syntax in hoofdlijn: <code>await Expect(%jouw_locator%).ToHaveCountAsync(%aantal%)</code></li>
+                                <li>Test!</li>
+                            </ul>
+                        </li>
+                        <li>Het is je misschien opgevallen dat er niet 3 maar 4 producten zijn. Oftewel: 1 product is niet zichtbaar.
+                            <ul>
+                                <li>Definieer een nieuwe test 'checken aantal zichtbare producten'</li>
+                                <li>Pas chaining toe op de Locator door een extra filter te gebruiken <code>Page.Locator("css=.product-card").Filter(%filter%)</code> om alleen de zichtbare 
+                                elementen mee te nemen. Het filter kan er b.v. als volgt uit zien: <code>new LocatorFilterOptions { Visible = true }</code>.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                        
+                    <h4>Opdracht 2: refactoring some code</h4>
+                    <ul>
+                        <li>Je besluit e.e.a. te refactoren. Gewoon een technische verandering.</li>
+                        <li>Vervang in de HTML van de producten de class "product-card" door "better-product-card" <small>(<a href="" id="refactor-css">Preview verbetering!</a>)</small></li>
+                        <li>Test!</li>
+                        <li>Hoe kun je deze test betrouwbaarder maken? Roles, Texts en Labels gaan je waarschijnlijk niet helpen. Is TestId een idee?</li>
+                        <li>Implementeer je fix, corrigeer de test</li>
+                        <li>Testen maar!</li>
+                    </ul>
+                    <p class="muted">Selectors die mogelijk regelmatig veranderen of niet heel specificek zijn breken al snel je tests. Voorbeelden van kwetsbare selectors kunnen zijn: <code>.primary</code>, <code>product-item</code> of door te selecteren op een vaak veranderende tekst (zoals een productnaam).</p>
+                    <script>
+                        document.getElementById('refactor-css').addEventListener('click', function () {
+                            document.querySelectorAll('.product-card').forEach(el => el.setAttribute('class', 'better-product-card'))
+                            event.preventDefault();
+                        });
+                    </script>
+
+                </section>
+
+            </p>
+
+        </article>
+    </main>
+
+
+    <style>
+
+        .better-product-card {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</body>
+</html>

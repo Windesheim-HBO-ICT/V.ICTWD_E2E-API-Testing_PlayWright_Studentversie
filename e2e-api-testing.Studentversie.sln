@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35323.107
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E2E-API-Playwright", "WebApplication\E2E-API-Playwright.csproj", "{F5481C16-A7C2-4C2D-A709-E3885B24C60C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaywrightTests.Studentversie", "PlaywrightTests.Studentversie\PlaywrightTests.Studentversie.csproj", "{67F28742-6562-DB1C-F8EE-F6E96C23BD4C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5481C16-A7C2-4C2D-A709-E3885B24C60C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5481C16-A7C2-4C2D-A709-E3885B24C60C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5481C16-A7C2-4C2D-A709-E3885B24C60C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5481C16-A7C2-4C2D-A709-E3885B24C60C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CF7EC50-E7F2-467A-99F0-498D1259CD93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CF7EC50-E7F2-467A-99F0-498D1259CD93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CF7EC50-E7F2-467A-99F0-498D1259CD93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CF7EC50-E7F2-467A-99F0-498D1259CD93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67F28742-6562-DB1C-F8EE-F6E96C23BD4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67F28742-6562-DB1C-F8EE-F6E96C23BD4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67F28742-6562-DB1C-F8EE-F6E96C23BD4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67F28742-6562-DB1C-F8EE-F6E96C23BD4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BC3E6A60-6E92-4269-B158-6B41A5ABE46B}
+	EndGlobalSection
+EndGlobal

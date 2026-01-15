@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>E2E Oefening 3</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.min.css">
+    <style>
+        code {
+            white-space: pre-wrap;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .limit-width {
+            max-width: 500px;
+        }
+
+        .muted {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: #0b5;
+        }
+
+        .secondary {
+            background: #5bd;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="container">
+        <hgroup>
+            <h1>Oefeningen: Assertions</h1>
+            <p>Ga naar: <a href="start.html">Start</a> - <a href="oefening2.html">Vorige oefening</a> - <a href="oefening4.html">Volgende oefening</a></p>
+
+        </hgroup>
+        <p>
+            Een test zonder Assertions is eigenlijk geen test. Met "Asserts" check je immers of een resultaat voldoet aan je verwachting.
+        </p>
+
+    </header>
+
+    <main class="container">
+
+        <article id="article-installatie">
+            <h3>Een flow testen</h3>
+            <p>
+                Voor het toepassen van Assert gaan we gebruik maken van een "login flow". Oftewel een proces van Login tonen, Inloggen en weer uitloggen.
+            </p>
+            <p>
+                Gebruik onderstaand formulier maar eens. Vul je als gebruikersnaam "John" in; dan ben je welkom! Gebruik je andere gegevens? Dan krijg je een foutmelding.
+            </p>
+            <p>
+                <section class="card" id="form-section">
+                </section>
+
+                <template id="loginTemplate">
+                    <div class="limit-width">
+                        <h5>Inloggen</h5>
+                        <form id="signup-form">
+                            <label for="name">Gebruikersnaam</label>
+                            <input id="name" name="name" type="text" placeholder="Jouw gebruikersnaam" data-testid="input-name">
+                            <br><br>
+
+                            <label for="email">Wachtwoord</label>
+                            <input id="password" name="password" type="password" placeholder="Wachtwoord" data-testid="input-paswd">
+                            <br><br>
+
+                            <button type="button" id="btn-submit" class="btn primary" data-testid="btn-submit">Inloggen</button>
+                        </form>
+                    </div>
+                    <div id="form-log"></div>
+                    <script>
+
+
+                        // click handler voor de "inloggen" knop. Het valideren van credentials wordt met dit event nagebootst.
+                        // Credentials fout? = rode melding
+                        // Credentials goed? = welkom melding + logout
+                        document.getElementById('btn-submit').addEventListener('click', function () {
+                            document.getElementById('btn-submit').setAttribute('aria-busy', 'true');
+                            setTimeout(() => {
+                                if (document.getElementById('name').value === 'John') {
+                                    document.getElementById('form-section').replaceChildren(document.getElementById('logoutTemplate').content.cloneNode(true));
+                                }
+                                else {
+                                    document.getElementById('form-section').replaceChildren(document.getElementById('errorTemplate').content.cloneNode(true));
+                                }
+
+                            }, 1000);
+                            event.preventDefault();
+                        });
+
+                    </script>
+                </template>
+
+                <template id="errorTemplate">
+                    <div class="limit-width" style="background-color: lightcoral;">
+                        <h5>Error!</h5>
+
+                        <form id="signout-form">
+                            Login mislukt.
+                            <button type="button" id="btn-reset" class="btn primary" data-testid="btn-reset">Terug</button>
+                        </form>
+                    </div>
+                    <script>
+
+                        // Terug naar de beginsituatie!
+                        document.getElementById('btn-reset').addEventListener('click', function () {
+                            document.location.reload();
+                            event.preventDefault();
+                        });
+
+                    </script>
+                </template>
+
+                <template id="logoutTemplate">
+                    <form id="signout-form">
+                        Welkom John!
+
+                        <button type="button" id="btn-logout" class="btn primary" data-testid="btn-logout">Uitloggen</button>
+                    </form>
+                    <script>
+
+                        // Uitloggen brengt je naar login.
+                        document.getElementById('btn-logout').addEventListener('click', function () {
+                            document.getElementById('form-section').replaceChildren(document.getElementById('loginTemplate').content.cloneNode(true));
+                            event.preventDefault();
+                        });
+                    </script>
+                </template>
+
+                <h4>Opdracht 1: happy flow</h4>
+                <ul>
+                    <li>Je gaat eerst een nieuwe <code>Oefening3.cs</code> file maken. Deze class laat je overerven van onze custom <code>BasePageTest</code> class.</li>
+                    <li>
+                        Definieer een nieuwe test voor 'Login succesvol':
+                        <ul>
+                            <li>Vul de gebruikersnaam en het gebruikersnaam d.m.v. de ARIA roles</li>
+                            <li>Submit de resultaten</li>
+                            <li>Assert dat de login succesvol is</li>
+                            <li>Test!</li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+                <h4>Opdracht 2: alternatieve flow</h4>
+                <ul>
+                    <li>Je gaat de voorgaande code uitbreiden. We testen uiteraard niet alleen de happy flows maar ook de minder happy paden.</li>
+                    <li>
+                        Definieer een nieuwe test voor het niet succesvol inloggen.
+                        <ul>
+                            <li>Analyseer hoe dit proces werkt</li>
+                            <li>Hoe je dit betrouwbaar kunt testen?</li>
+                            <li>Welke asserts ga je doen?</li>
+                            <li>Maak de test... en test deze!</li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </p>
+            <script>
+
+                // Login standaard tonen
+                document.getElementById('form-section').replaceChildren(document.getElementById('loginTemplate').content.cloneNode(true));
+
+
+
+            </script>
+
+        </article>
+
+
+    </main>
+
+
+</body>
+</html>

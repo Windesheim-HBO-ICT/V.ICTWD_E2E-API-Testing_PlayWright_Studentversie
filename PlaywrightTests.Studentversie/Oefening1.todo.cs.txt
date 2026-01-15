@@ -1,0 +1,43 @@
+﻿using Microsoft.Playwright;
+
+namespace PlaywrightTests
+{
+    [TestClass]
+    public class Oefening1_todo : BasePageTest
+    {
+        [TestMethod]
+        public async Task Oefening1_HeeftTitel()
+        {
+            await Page.GotoAsync("/oefening1.html");
+
+            // Expect an exact title.
+            await Expect(Page).ToHaveTitleAsync("E2E Oefening 1");
+        }
+
+
+        [TestMethod]
+        public async Task Oefening1_InvullenVeld()
+        {
+            await Page.GotoAsync("/oefening1.html");
+
+			// TODO 1: gebruik de Page.GetByTestId locator om de naam textbox te zoeken en vul deze met de waarde 'John Doe'
+
+			// TODO 2: gebruik de Page.GetByRole locator om de emailadres textbox te zoeken en vul deze met de waarde 'john@doe.com'
+
+			// Normaliter doe je bij tests natuurlijk ook asserts! Deze mag je hier even achterwege laten.
+
+		}
+
+
+		[TestMethod]
+        public async Task Oefening1_PushButton()
+        {
+            await Page.GotoAsync("/oefening1.html");
+
+			// TODO 3: gebruik de Page.GetByRole locator om de aanmeldknop te localiseren en voer een 'click' uit.
+
+			// TODO 4: Pas een Expect toe op een 'css' locator (Page.Locator("css=....")) om de weergegeven dialog te localiseren. Check of deze zichtbaar is ( Expect(locatore).ToBeVisibleAsync() ).
+		}
+
+	}
+}

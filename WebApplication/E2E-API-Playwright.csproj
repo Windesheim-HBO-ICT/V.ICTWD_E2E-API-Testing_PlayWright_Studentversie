@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>WebApplication1</RootNamespace>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\oefening2.html" />
+    <Content Remove="wwwroot\oefening3.html" />
+    <Content Remove="wwwroot\oefening4.html" />
+    <Content Remove="wwwroot\oefening5.html" />
+    <Content Remove="wwwroot\start.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\oefening5.html" />
+    <None Include="wwwroot\oefening4.html" />
+    <None Include="wwwroot\oefening3.html" />
+    <None Include="wwwroot\oefening2.html" />
+    <None Include="wwwroot\start.html" />
+    <None Include="wwwroot\oefening1.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.Authentication.ApiKey" Version="9.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.0.1" />
+  </ItemGroup>
+
+</Project>

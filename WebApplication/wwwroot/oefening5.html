@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>E2E Oefening 5</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.min.css">
+    <style>
+        code {
+            white-space: pre-wrap;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .limit-width {
+            max-width: 500px;
+        }
+
+        .muted {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: #0b5;
+        }
+
+        .secondary {
+            background: #5bd;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="container">
+        <hgroup>
+            <h1>Oefeningen: Advanced API Testing</h1>
+            <p>Ga naar: <a href="start.html">Start</a> - <a href="oefening4.html">Vorige oefening</a></p>
+
+        </hgroup>
+        <p>
+            Zover heb je basis API tests gedaan. In de volgende oefeningen maak je kennis met complexere scenario's.
+        </p>
+    </header>
+
+    <main class="container">
+
+        <article id="article-opdrachten">
+            <h3>Querystring argumenten / data meesturen naar een API</h3>
+            <p>
+                Bij het aanroepen van een API moet je vaak ook data meesturen. Bijvoorbeeld omdat je een entiteit wilt opslaan zoals een nieuwsbief inschrijving, klantgegevens of
+                bestelling. Bij deze eerste oefening ga je informatie meesturen in de querystring van de URL.
+            </p>
+
+            <p>
+                Het meegeven van argumenten en data doe je bij het uitvoeren van de Request.
+
+                <blockquote>
+                    <h5><mark>Dikke tip:</mark></h5>
+                    <p>
+                        De methode <code>Request.GetAsync()</code> die je zover hebt gebruikt kent meerdere overloads. Je kunt o.a. een <code>APIRequestContextOptions</code> object
+                        meesturen. Op dit object vind je o.a. het attribuut <code>Params</code> en het attribuut <code>DataObject</code>. Uit je intellisense kun je wel opmaken welk attribuut
+                        geschikt is voor jouw toepassing.
+                    </p>
+                    <p>
+                        De argumenten zelf bestaan vaak uit een collectie van het type <code>Dictionary&lt;string, object&gt;</code>. Bijvoorbeeld:
+                    </p>
+                    <code><pre>
+var queryParams = new Dictionary<string, object>()
+{
+    { "key", "value" },
+    { "key", "value" }
+};
+</pre></code>
+                </blockquote>
+            </p>
+            <p>
+                <h4>Opdracht 1: gesorteerde producten ophalen</h4>
+                <ul>
+                    <li>Je gaat eerst een nieuwe <code>Oefening5.cs</code> file maken. Deze class laat je overerven van onze custom <code>BaseAuthenticatedAPITest</code> class.</li>
+                    <li>Neem de eerder gemaakte test voor het ophalen van een collectie producten over</li>
+                    <li>Definieer een nieuwe <code>APIRequestContextOptions</code></li>
+                    <li>Definieer een collectie van parameters en geef de <code>sorting</code> parameter mee met een geldige sortering(zie Swagger)</li>
+                    <li>Voer de test uit. Krijg je gesorteerde producten?</li>
+                    <li>
+                        Tijd over?
+                        <ol>
+                            <li>Wat zou een geldige Assert kunnen zijn om te checken of je resultaat voloet?</li>
+                            <li>Implementeer deze asserts</li>
+                        </ol>
+                    </li>
+
+                </ul>
+
+
+                <h4>Opdracht 2: een nieuwe product toevoegen via de API</h4>
+                <ul>
+                    <li>Bij deze oefening ga je een nieuw product toevoegen via de API.</li>
+                    <li>
+                        Definieer een nieuwe test en gebruik de code uit de voorgaande oefening als uitgangspunt. (maak even een copy van de testmethode)
+                        Werk onderstaande stappen uit in je eigen code:
+                        <ul>
+                            <li>Bepaal welk endpoint op de API je gaat gebruiken. (zie Swagger)</li>
+                            <li>Voor het aanmaken van een entiteit gebruik je geen <code>GET</code> request maar eigenlijk altijd een <code>POST</code> request. Implementeer het endpoint met de juiste requesttype.</li>
+                            <li>Als je een nieuw product wilt aanmaken moet je die ook wel meegeven. Breid je <code>APIRequestContextOptions</code> object zo uit dat je een product meegeeft.(zie "Example value" in swagger)</li>
+                            <li>Zorg dat je het dataobject via de juiste attribuut van <code>APIRequestContextOptions</code> set<br />
+                            <li>Maak je code werkend en voer de test uit. Wordt je product aangemaakt? (dit kun je b.v via Swagger testen)</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Tijd over?
+                        <ol>
+                            <li>Na het aanmaken kun je ook de API gebruiken om je gemaakte product op te halen (en asserten). Zo kun je een cyclus maken om uitgebreidere checks te doen.</li>
+                            <li>Bijvoorbeeld: Aanmaken -> Checken aangemaakt -> Delete (<code>Request.DeleteAsync</code>) --> Checken deleted (status van Response=404)</li>
+                        </ol>
+                    </li>
+                </ul>
+            </p>
+
+
+
+        </article>
+
+
+        <article id="article-extra">
+            <h3>Leef je uit!</h3>
+            <p>
+                Je hebt nu ook data meegestuurd naar de API. Er zijn nog een paar scenario's die je zelf kunt ontdekken.
+            </p>
+
+            <p>
+                <h4>Foutafhandeling</h4>
+                Zover hebben we ons vooral gericht op de happy flows. Wat nu als we ook de minder happy flows testen? Het is je misschien opgevallen dat het sorting argument van het GET products 
+                endpoint twee geldige waardes heeft. Wat doet de API als je een andere waarde meegeeft? En hoe zou je die kunnen testen?
+            </p>
+
+            <p>
+                <h4>Hoe zit het met de authenticatie?</h4>
+                Voor de POST en DELETE is authenticatie op de API vereist. Dit gebeurt met een API-key en hebben nu 'magisch' toegepast door in oefening 5 de <code>BaseAuthenticatedAPITest</code> class als baseclass te 
+                nemen. Verdiep je eens in dit mechanisme! Hoe werkt het?
+            </p>
+
+            <p>
+                <h4>Combineren van UI en API testing</h4>
+                In Playwright hebben we nu zowel UI als API testing gedaan. Moderne applicaties maken veel gebruik clientside technologie en dus 
+                ook van API's. Kun je een scenario bedenken waarbij je tests maakt die beide toepassingen nuttig combineren? Bijvoorbeeld dat je eerst iets in de UI doet 
+                om het daarna via de API te checken?
+            </p>
+
+        </article>
+
+
+    </main>
+
+
+</body>
+</html>

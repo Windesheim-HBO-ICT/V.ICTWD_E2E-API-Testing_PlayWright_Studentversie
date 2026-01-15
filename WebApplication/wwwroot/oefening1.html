@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>E2E Oefening 1</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.1.1/css/pico.min.css">
+    <style>
+        code {
+            white-space: pre-wrap;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .limit-width {
+            max-width: 500px;
+        }
+
+        .muted {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: #0b5;
+        }
+
+        .secondary {
+            background: #5bd;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="container">
+        <hgroup>
+            <h1>Oefeningen: It's all about selectors!</h1>
+            <p>Ga naar: <a href="start.html">Start</a> - <a href="oefening2.html">Volgende oefening</a></p>
+
+        </hgroup>
+        <p>
+            Bij deze oefeningen maak je kennis met het gebruik van locators/selectors. Dit is een belangrijke
+            vaardigheid om tests te kunnen schrijven maar ook om te zorgen dat je tests betrouwbaar blijven draaien.
+        </p>
+    </header>
+
+    <main class="container">
+
+        <article id="article-installatie">
+            <h3>Basis locator</h3>
+            <p>
+                Bekijk onderstaand formulier voor het aanmelden bij een nieuwsbrief. Onder het formulier vind je een opdracht die je hiermee gaat doen.
+            </p>
+            <p>
+                <section class="card" id="form-section">
+                    <div class="limit-width">
+                        <h5>Nieuwsbrief</h5>
+                        <form id="signup-form">
+                            <label for="name">Naam</label>
+                            <input id="name" name="name" type="text" placeholder="Jouw naam" data-testid="input-name">
+                            <br><br>
+
+                            <label for="email">E-mail</label>
+                            <input id="email" name="email" type="email" placeholder="naam@voorbeeld.nl" data-testid="input-email">
+                            <br><br>
+
+                            <button type="button" id="btn-submit" class="btn primary" data-testid="btn-submit">Aanmelden</button>
+                            <button type="button" id="btn-cancel" class="btn secondary" data-testid="btn-cancel">Annuleren</button>
+                        </form>
+                    </div>
+                    <div id="form-log"></div>
+                </section>
+
+                <h4>Opdracht:</h4>
+                <ul>
+                    <li>Maak in het PlaywrightTests project een nieuw bestand <code>oefening1.cs</code></li>
+                    <li>Plaats hierin de code die je <a href="" onclick="document.getElementById('startcode-dialog').show(); return false;">hier</a> vindt</li>
+                    <li>In <code>oefening1.cs</code> zie je nu drie "tests"</li>
+                    <li>Actie 1: draai de tests! </li>
+                    <li>Actie 2: twee van de drie tests bevatten alleen pseudo code. Oefen met de locators en maak de code werkend.</li>
+                    <li>Actie 3: start de tests nogmaals..... werkt het?</li>
+                </ul>
+                <blockquote>
+                    <h5><mark>Dikke tip:</mark></h5>
+                    <p>
+                        <em>Voorbeelden van selectors:</em> <code>Page.GetByRole('textbox', {name: 'de naam v/h label'})</code> of <code>Page.GetByTestId('test-id van het element')</code>
+                    </p>
+                </blockquote>
+                
+            </p>
+            <script>
+                document.getElementById('btn-submit').addEventListener('click', function () {
+                    document.getElementById('submit-dialog').show();
+                    event.preventDefault();
+                });
+                document.getElementById('btn-cancel').addEventListener('click', function () {
+                    document.getElementById('form-log').append('Oke! ');
+                    event.preventDefault();
+                });
+            </script>
+
+            <dialog id="startcode-dialog">
+                <article>
+                    <header>
+                        <button aria-label="Close" rel="prev" onclick="this.closest('dialog').close(); return false;"></button>
+                        <p>
+                            <strong>Code</strong>
+                        </p>
+                    </header>
+<pre><code>
+    using Microsoft.Playwright;
+
+    namespace PlaywrightTests
+    {
+        [TestClass]
+        public class Oefening1 : BasePageTest
+        {
+            [TestMethod]
+            public async Task Oefening1_HeeftTitel()
+            {
+                await Page.GotoAsync("/oefening1.html");
+
+                // Expect an exact title
+                await Expect(Page).ToHaveTitleAsync("E2E Oefening 1");
+            }
+
+
+            [TestMethod]
+            public async Task Oefening1_InvullenVeld()
+            {
+                await Page.GotoAsync("/oefening1.html");
+
+                // TODO 1: gebruik de Page.GetByTestId locator om de naam textbox te zoeken en vul deze met de waarde 'John Doe'
+
+                // TODO 2: gebruik de Page.GetByRole locator om de emailadres textbox te zoeken en vul deze met de waarde 'john@doe.com'
+
+                // Normaliter doe je bij tests natuurlijk ook asserts! Deze mag je hier even achterwege laten.
+
+            }
+
+
+            [TestMethod]
+            public async Task Oefening1_PushButton()
+            {
+                await Page.GotoAsync("/oefening1.html");
+
+                // TODO 3: gebruik de Page.GetByRole locator om de aanmeldknop te localiseren en voer een 'click' uit.
+
+                // TODO 4: Pas een Expect toe op een 'css' locator (Page.Locator("css=....")) om de weergegeven dialog te localiseren. Check of deze zichtbaar is ( Expect(locatore).ToBeVisibleAsync() ).
+            }
+
+        }
+    }
+
+</code></pre>
+                </article>
+            </dialog>
+            <dialog id="submit-dialog">
+                <article>
+                    <header>
+                        <button aria-label="Close" rel="prev" onclick="this.closest('dialog').close(); return false;"></button>
+                        <p>
+                            <strong>🗓️ Bedankt voor je aanmelding</strong>
+                        </p>
+                    </header>
+                    <p>
+                        Bedankt voor je aanmelding. Vanaf nu krijg je nog meer sp@m! :)
+                    </p>
+                </article>
+            </dialog>
+        </article>
+
+
+    </main>
+
+
+</body>
+</html>
